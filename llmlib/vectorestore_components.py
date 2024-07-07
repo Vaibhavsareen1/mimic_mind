@@ -291,4 +291,3 @@ class CustomChromaDB(object):
         present_ids = results['ids']
 
         return True if len(present_ids) > 0 else False
-    

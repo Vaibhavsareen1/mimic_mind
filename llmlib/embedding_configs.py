@@ -18,11 +18,11 @@ def download_embedding_configs(model_name: str, model_path: str, tokenizer_path:
     """
 
     # Load embedding model and its tokenizer
-    embedding_model = AutoModel.from_pretrained(pretrained_model_name_or_path=model_name)
+    embedding_model = AutoModel.from_pretrained(pretrained_model_name_or_path=model_name, trust_remote_code=True)
     tokenizer = AutoTokenizer.from_pretrained(pretrained_model_name_or_path=model_name)
 
     # Save the model and tokenizer
-    torch.save(embedding_model, model_path)
+    embedding_model.save_pretrained(model_path)
     tokenizer.save_pretrained(tokenizer_path)
 
     return True
@@ -40,7 +40,7 @@ def get_embedding_config(model_path: str, tokenizer_path: str) -> Tuple[torch.nn
     Embedding model and its tokenizer
     """
 
-    embedding_model = torch.load(model_path)
+    embedding_model = AutoModel.from_pretrained(model_path, trust_remote_code=True)
     embedding_tokenizer = AutoTokenizer.from_pretrained(tokenizer_path)
 
     return embedding_model, embedding_tokenizer

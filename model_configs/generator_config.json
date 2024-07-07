@@ -1,0 +1,50 @@
+{
+    "Meta-Llama-2-7B-GGUF-Q8": {"Model_Path": "local_models\\llama-2-7b.Q8_0.gguf",
+                                "Context_Length": 4096,
+                                "Model_Type": "Open-Source",
+                                "API_Key_variable": "null",
+                                "API_Secret_variable": "null",
+                                "Foundation_model_name": "null"},
+    
+    "Meta-Llama-2-7B-Instruct-GGUF-Q8": {"Model_Path": "local_models\\llama-2-7b-chat.Q8_0.gguf",
+                                         "Context_Length": 4096,
+                                         "Model_Type": "Open-Source",
+                                         "API_Key_variable": "null",
+                                         "API_Secret_variable": "null",
+                                         "Foundation_model_name": "null"},
+
+    "Meta-Llama-2-13B-GGUF-Q8": {"Model_Path": "local_models\\llama-2-13b.Q8_0.gguf",
+                                         "Context_Length": 4096,
+                                         "Model_Type": "Open-Source",
+                                         "API_Key_variable": "null",
+                                         "API_Secret_variable": "null",
+                                         "Foundation_model_name": "null"},
+
+    "Meta-Llama-2-13B-Instruct-GGUF-Q8": {"Model_Path": "local_models\\llama-2-13b-chat.Q8_0.gguf",
+                                          "Context_Length": 4096,
+                                          "Model_Type": "Open-Source",
+                                          "API_Key_variable": "null",
+                                          "API_Secret_variable": "null",
+                                          "Foundation_model_name": "null"},
+
+    "Meta-CodeLlama-2-7B-Instruct-GGUF-Q8": {"Model_Path": "local_models\\codellama-7b-instruct.Q8_0.gguf",
+                                                  "Context_Length": 4096,
+                                                  "Model_Type": "Open-Source",
+                                                  "API_Key_variable": "null",
+                                                  "API_Secret_variable": "null",
+                                                  "Foundation_model_name": "null"},
+
+    "Meta-CodeLlama-2-13B-Instruct-GGUF-Q8": {"Model_Path": "local_models\\codellama-13b-instruct.Q8_0.gguf",
+                                              "Context_Length": 4096,
+                                              "Model_Type": "Open-Source",
+                                              "API_Key_variable": "null",
+                                              "API_Secret_variable": "null",
+                                              "Foundation_model_name": "null"},
+
+    "Meta-Llama-3-8B-Instruct-GGUF-Q8": {"Model_Path": "local_models\\Meta-Llama-3-8B-Instruct-Q8_0.gguf",
+                                         "Context_Length": 8192,
+                                         "Model_Type": "Open-Source",
+                                         "API_Key_variable": "null",
+                                         "API_Secret_variable": "null",
+                                         "Foundation_model_name": "null"}
+}

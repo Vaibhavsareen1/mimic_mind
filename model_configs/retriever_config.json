@@ -1,0 +1,31 @@
+{
+    "all-mpnet-base-v2": {"Model_Path": "retriever_models\\models\\sentence-transformers/all-mpnet-base-v2",
+                          "Tokenizer_Path": "retriever_models\\tokenizers\\sentence-transformers/all-mpnet-base-v2",
+                          "Model_Size": "110 Billion parameters",
+                          "Embedding_Dimension": 768,
+                          "Max_Tokens": 514,
+                          "Model_Type": "Open-Source",
+                          "API_Key_variable": "null",
+                          "API_Secret_variable": "null",
+                          "Foundation_model_name": "null"},
+
+    "gte-base-en-v1.5": {"Model_Path": "retriever_models\\models\\Alibaba-NLP/gte-base-en-v1.5",
+                         "Tokenizer_Path": "retriever_models\\tokenizers\\Alibaba-NLP/gte-base-en-v1.5",
+                         "Model_Size": "137 Billion parameters",
+                         "Embedding_Dimension": 768,
+                         "Max_Tokens": 8192,
+                         "Model_Type": "Open-Source",
+                         "API_Key_variable": "null",
+                         "API_Secret_variable": "null",
+                         "Foundation_model_name": "null"},
+
+    "gte-large-en-v1.5": {"Model_Path": "retriever_models\\models\\Alibaba-NLP/gte-large-en-v1.5",
+                          "Tokenizer_Path": "retriever_models\\tokenizers\\Alibaba-NLP/gte-large-en-v1.5",
+                          "Model_Size": "434 Billion parameters",
+                          "Embedding_Dimension": 1024,
+                          "Max_Tokens": 8192,
+                          "Model_Type": "Open-Source",
+                          "API_Key_variable": "null",
+                          "API_Secret_variable": "null",
+                          "Foundation_model_name": "null"}
+}

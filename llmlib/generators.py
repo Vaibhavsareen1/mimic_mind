@@ -66,8 +66,8 @@ class LlamaCPPGenerator(BaseGenerator):
 
 
         self._llm_model = Llama(model_path=model_path,
-                               n_gpu_layers=n_gpu_layers,
-                               n_ctx=context_size)
+                                n_gpu_layers=n_gpu_layers,
+                                n_ctx=context_size)
         self._max_tokens = max_tokens
         self._temperature = temperature
         self._echo = echo

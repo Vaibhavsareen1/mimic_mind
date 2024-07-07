@@ -102,7 +102,7 @@ class Retriever(BaseRetriever):
         """
 
         # put the query into a list to be passed into the chroma db collection
-        retrieved_documents =self._chroma_collection.get_documents(query=[query], top_k=self._top_k)
+        retrieved_documents = self._chroma_collection.get_documents(query=[query], top_k=self._top_k)
 
         return retrieved_documents
     
