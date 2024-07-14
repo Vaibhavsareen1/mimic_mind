@@ -268,7 +268,7 @@ class Llama3InstructSTPromptTemplate(BasePromptTemplate):
         self._system_message = system_message if system_message else _DEFAULT_SYSTEM_MESSAGE
 
         # prompt template to be used
-        self._prompt_template = Template("\n".join(["""<|begin_of_text|><|start_header_id|>system<|end_header_id|>""",
+        self._prompt_template = Template("\n".join(["""<|start_header_id|>system<|end_header_id|>""",
                                                     """""",
                                                     """${system_message}<|eot_id|><|start_header_id|>user<|end_header_id|>""",
                                                     """""",
@@ -320,7 +320,7 @@ class Llama3InstructMTPromptTemplate(BasePromptTemplate):
 
         self._system_message = system_message if system_message else _DEFAULT_SYSTEM_MESSAGE
 
-        self._prompt_template = Template("\n".join(["""<|begin_of_text|><|start_header_id|>system<|end_header_id|>""",
+        self._prompt_template = Template("\n".join(["""<|start_header_id|>system<|end_header_id|>""",
                                                     """""",
                                                     """${system_message}<|eot_id|>""",
                                                     """<|start_header_id|>user<|end_header_id|>""",
