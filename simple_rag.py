@@ -226,7 +226,10 @@ with gr.Blocks(theme=_DEFAULT_GRADIO_THEME, title='Simple R.A.G Application') as
                 document_ingestion_text = gr.Textbox(interactive=False,
                                                      show_label=False,
                                                      value=' '.join(['Select documents you want to ingest.',
-                                                                     'Duplicate files will not be ingested.',]))
+                                                                     'Duplicate files will not be ingested.']))
+                single_text_comp = gr.Radio(label='Store content as a single string.',
+                                            choices=['Yes', 'No'],
+                                            value='Yes')
                 document_ingestion_button = gr.Button(value='Ingest Documents')
             
             document_ingestion_comp = gr.File(label='Select documents',
@@ -521,15 +524,16 @@ with gr.Blocks(theme=_DEFAULT_GRADIO_THEME, title='Simple R.A.G Application') as
                 chunk_size,
                 overlap_size)
 
-    @document_ingestion_button.click(inputs=[document_ingestion_comp],
+    @document_ingestion_button.click(inputs=[document_ingestion_comp, single_text_comp],
                                      outputs=[collection_documents_display, document_ingestion_comp])
-    def ingest_documents(document_list: List[str]) -> Tuple[List[str], None]:
+    def ingest_documents(document_list: List[str], single_text: str) -> Tuple[List[str], None]:
         """
         Method to implement ingestion process in RAG methodology
 
         :Parameters:
         document_list: List of documents to be ingested
-
+        single_text: Store content of the document as a single string
+        
         :Returns:
         Tuple containing updated gradio components for document display and document ingestion component
         """
@@ -547,6 +551,7 @@ with gr.Blocks(theme=_DEFAULT_GRADIO_THEME, title='Simple R.A.G Application') as
         chunk_size = vectorstore_handler.get_chunk_size()
         overlap_size = vectorstore_handler.get_overlap_size()
 
+        single_text_bool = True if single_text == 'Yes' else False
         # Instantiate a document ingestor and chunker
         chunker = TextChunker(chunk_size=chunk_size, overlap_size=overlap_size)
         ingestor = PDFTextIngestor(model_path=retriever_path,
@@ -554,7 +559,7 @@ with gr.Blocks(theme=_DEFAULT_GRADIO_THEME, title='Simple R.A.G Application') as
                                    db_path=_VECTORSTORE_PATH, 
                                    collection_name=collection_name,
                                    chunker=chunker,
-                                   text_reader=PDFTextReader())
+                                   text_reader=PDFTextReader(single_text=single_text_bool))
 
         # Raise an info banner if no document is being ingested
         if (document_list is None) or (len(document_list) < 1):
