@@ -47,13 +47,14 @@ class PDFTextReader(BaseTextReader):
 
         super().__init__()
 
-    def convert_to_text(self, source_file_path: str) -> List[str]:
+    def convert_to_text(self, source_file_path: str, single_text: bool = False) -> List[str]:
         """
         Method to convert a pdf file into text. Text from each page will be stored as a separate string.
         All strings are stored and returned as a List of strings
 
         :Parameters:
         source_file_path: Absolute file path of the pdf file
+        single_text: Boolean to concatenate content present across multiple pages into a single string
 
         :Returns:
         string representation of the pdf file
@@ -68,7 +69,7 @@ class PDFTextReader(BaseTextReader):
             for page in doc:
                 all_pages.append(page.get_text())
 
-        return all_pages
+        return [" ".join(all_pages)] if single_text else all_pages 
     
 
 class TextFileReader(BaseTextReader):
