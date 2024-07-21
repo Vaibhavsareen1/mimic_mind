@@ -34,12 +34,12 @@ class PDFTextReader(BaseTextReader):
     A class that is used to extract text from a PDF file.
     """
 
-    def __init__(self) -> None:
+    def __init__(self, single_text: bool = False) -> None:
         """
         Method to instantiate object of :class: PDFTextReader
 
         :Parameters:
-        None
+        single_text: Boolean to concatenate content present across multiple pages into a single string
 
         :Returns:
         None
@@ -47,14 +47,15 @@ class PDFTextReader(BaseTextReader):
 
         super().__init__()
 
-    def convert_to_text(self, source_file_path: str, single_text: bool = False) -> List[str]:
+        self._single_text = single_text
+
+    def convert_to_text(self, source_file_path: str, ) -> List[str]:
         """
         Method to convert a pdf file into text. Text from each page will be stored as a separate string.
         All strings are stored and returned as a List of strings
 
         :Parameters:
         source_file_path: Absolute file path of the pdf file
-        single_text: Boolean to concatenate content present across multiple pages into a single string
 
         :Returns:
         string representation of the pdf file
@@ -69,7 +70,7 @@ class PDFTextReader(BaseTextReader):
             for page in doc:
                 all_pages.append(page.get_text())
 
-        return [" ".join(all_pages)] if single_text else all_pages 
+        return [" ".join(all_pages)] if self._single_text else all_pages 
     
 
 class TextFileReader(BaseTextReader):
