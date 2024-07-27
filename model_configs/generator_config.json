@@ -46,5 +46,12 @@
                                          "Model_Type": "Open-Source",
                                          "API_Key_variable": "null",
                                          "API_Secret_variable": "null",
-                                         "Foundation_model_name": "null"}
+                                         "Foundation_model_name": "null"},
+
+    "gpt-4o-mini": {"Model_Path": "null",
+                    "Context_Length": 128000,
+                    "Model_Type": "OpenAI",
+                    "API_Key_variable": "add_api_key_here",
+                    "API_Secret_variable": "null",
+                    "Foundation_model_name": "gpt-4o-mini"}
 }
