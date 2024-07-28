@@ -88,7 +88,7 @@ class LlamaCPPGenerator(BaseGenerator):
         self._prompt_tokens: int = 0
         self._total_tokens: int = 0
 
-    def generate(self, user_message: str) -> List[str]:
+    def generate(self, user_message: str | None = None) -> List[str]:
         """
         Method to generate output based on the user given prompt using a llamacpp LLM model
 
