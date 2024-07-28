@@ -6,7 +6,7 @@ from llmlib.chunkers import TextChunker
 from llmlib.retrievers import Retriever
 from llmlib.ingestors import PDFTextIngestor
 from llmlib.text_readers import PDFTextReader
-from llmlib.generators import LlamaCPPGenerator
+from llmlib.generators import LlamaCPPGenerator, OpenAISingleTurnGenerator
 from llmlib.prompt_templates import BasePromptTemplate
 from llmlib.vectorestore_components import CustomChromaDB
 from custom_utils.ui_configs import _DEFAULT_GRADIO_THEME
@@ -89,6 +89,7 @@ with gr.Blocks(theme=_DEFAULT_GRADIO_THEME, title='Simple R.A.G Application') as
     retriever: Retriever | None = None
     generator: LlamaCPPGenerator | None = None
     prompt_template: BasePromptTemplate | None = None
+    model_type: str = 'Open-Source'
 
     # Static variables that are to be instantiated only once
     retriever_names: List[str] = retriever_handler.get_model_list()
@@ -633,12 +634,12 @@ with gr.Blocks(theme=_DEFAULT_GRADIO_THEME, title='Simple R.A.G Application') as
         k_documents: Number of documents that are to be retrieved during the retrieval process
         
         :Returns:
-        None
+        New chat interface and input box 
         """
 
         # Call in variables from global to local scope
         global retriever_handler, generator_handler, vectorstore_handler, prompt_handler, _VECTORSTORE_PATH
-        global retriever, generator, prompt_template
+        global retriever, generator, prompt_template, model_type
 
         # Switch to the current collection_name
         vectorstore_handler.switch_collection(collection_name=collection_name)
@@ -650,8 +651,10 @@ with gr.Blocks(theme=_DEFAULT_GRADIO_THEME, title='Simple R.A.G Application') as
 
         # Switch to the user's requested generator
         generator_handler.switch_model(model_name=generator_name)
-        generator_model_path = generator_handler.get_model_path()
+        generator_api_key = generator_handler.get_api_key()
         generator_max_tokens = generator_handler.get_context_length()
+        generator_model_path = generator_handler.get_model_path()
+        generator_model_type = generator_handler.get_model_type()
 
         # Set the system message to None if the system message provided by the user is empty
         system_message = system_message if ((isinstance(system_message, str)) and (len(system_message) > 0)) else None
@@ -663,14 +666,23 @@ with gr.Blocks(theme=_DEFAULT_GRADIO_THEME, title='Simple R.A.G Application') as
                               collection_name=collection_name,
                               top_k=k_documents)
 
-        generator = LlamaCPPGenerator(model_path=generator_model_path,
-                                      max_tokens=generator_max_tokens,
-                                      temperature=temperature,
-                                      n_gpu_layers=gpu_layers if torch.cuda.is_available() else 0,
-                                      context_size=generator_max_tokens)
-        # Set the new prompt template based on the model being used
-        prompt_template = prompt_handler.get_prompt_template(model_name=generator_name,
-                                                             system_message=system_message)
+        if generator_model_type == 'Open-Source':
+            generator = LlamaCPPGenerator(model_path=generator_model_path,
+                                          context_size=generator_max_tokens,
+                                          max_tokens=generator_max_tokens,
+                                          n_gpu_layers=gpu_layers if torch.cuda.is_available() else 0,
+                                          temperature=temperature)
+                                          
+            # Set the new prompt template based on the model being used
+            prompt_template = prompt_handler.get_prompt_template(model_name=generator_name,
+                                                                 system_message=system_message)
+        else:
+            generator = OpenAISingleTurnGenerator(api_key=generator_api_key,
+                                                  model_name=generator_name,
+                                                  max_tokens=generator_max_tokens,
+                                                  number_of_responses=1,
+                                                  system_message=system_message,
+                                                  temperature=temperature)
 
         # Display information about the session being started.
         gr.Info("Session has started.")
@@ -695,7 +707,7 @@ with gr.Blocks(theme=_DEFAULT_GRADIO_THEME, title='Simple R.A.G Application') as
         """
 
         # Pull variables from global variables into local context
-        global retriever, generator, prompt_template
+        global retriever, generator, prompt_template, model_type
 
         # Retrieve documents based on user's input
         retrieved_text: List[str] = retriever.query(query=user_input)
@@ -705,15 +717,17 @@ with gr.Blocks(theme=_DEFAULT_GRADIO_THEME, title='Simple R.A.G Application') as
         COUNTER = 1
         for text in retrieved_text:
             user_message = '\n'.join([user_input, '', 'Content:', text])
-            prompt = prompt_template.generate_prompt(user_message=user_message)
-
-            generated_text = generator.generate(prompt=prompt)
+            if model_type == 'Open-Source':
+                prompt = prompt_template.generate_prompt(user_message=user_message)
+                generated_text_list: List[str] = generator.generate(user_message=prompt)
+            else:
+                generated_text_list: List[str] = generator.generate(user_message=user_message)
 
             if FIRST_TEXT:
-                chat_history.append((user_input, f'Response based on Retrieved Document {COUNTER}:\n {generated_text}'))
+                chat_history.append((user_input, f'Response based on Retrieved Document {COUNTER}:\n {generated_text_list[0]}'))
                 FIRST_TEXT = False
             else:
-                chat_history.append((None, f'Response based on Retrieved Document {COUNTER}:\n {generated_text}'))
+                chat_history.append((None, f'Response based on Retrieved Document {COUNTER}:\n {generated_text_list[0]}'))
         
             COUNTER += 1
         return (chat_history,

@@ -28,11 +28,11 @@
                                           "Foundation_model_name": "null"},
 
     "Meta-CodeLlama-2-7B-Instruct-GGUF-Q8": {"Model_Path": "local_models\\codellama-7b-instruct.Q8_0.gguf",
-                                                  "Context_Length": 4096,
-                                                  "Model_Type": "Open-Source",
-                                                  "API_Key_variable": "null",
-                                                  "API_Secret_variable": "null",
-                                                  "Foundation_model_name": "null"},
+                                             "Context_Length": 4096,
+                                             "Model_Type": "Open-Source",
+                                             "API_Key_variable": "null",
+                                             "API_Secret_variable": "null",
+                                             "Foundation_model_name": "null"},
 
     "Meta-CodeLlama-2-13B-Instruct-GGUF-Q8": {"Model_Path": "local_models\\codellama-13b-instruct.Q8_0.gguf",
                                               "Context_Length": 4096,
@@ -52,6 +52,6 @@
                     "Context_Length": 128000,
                     "Model_Type": "OpenAI",
                     "API_Key_variable": "add_api_key_here",
-                    "API_Secret_variable": "null",
+                    "API_Secret_variable": "add_secret_key_here",
                     "Foundation_model_name": "gpt-4o-mini"}
 }
