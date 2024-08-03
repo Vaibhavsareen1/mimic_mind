@@ -87,7 +87,7 @@ with gr.Blocks(theme=_DEFAULT_GRADIO_THEME, title='Simple R.A.G Application') as
     vectorstore_handler.switch_collection(collection_name=collection_names[0])
     ingested_documents = vectorstore_handler.get_documents()
     retriever: Retriever | None = None
-    generator: LlamaCPPGenerator | None = None
+    generator: LlamaCPPGenerator | OpenAISingleTurnGenerator | None = None
     prompt_template: BasePromptTemplate | None = None
     model_type: str = 'Open-Source'
 
@@ -679,7 +679,6 @@ with gr.Blocks(theme=_DEFAULT_GRADIO_THEME, title='Simple R.A.G Application') as
         else:
             generator = OpenAISingleTurnGenerator(api_key=generator_api_key,
                                                   model_name=generator_name,
-                                                  max_tokens=generator_max_tokens,
                                                   number_of_responses=1,
                                                   system_message=system_message,
                                                   temperature=temperature)

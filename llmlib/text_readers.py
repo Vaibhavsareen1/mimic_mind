@@ -49,7 +49,7 @@ class PDFTextReader(BaseTextReader):
 
         self._single_text = single_text
 
-    def convert_to_text(self, source_file_path: str, ) -> List[str]:
+    def convert_to_text(self, source_file_path: str) -> List[str]:
         """
         Method to convert a pdf file into text. Text from each page will be stored as a separate string.
         All strings are stored and returned as a List of strings

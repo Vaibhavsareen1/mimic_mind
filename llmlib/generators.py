@@ -237,7 +237,7 @@ class OpenAISingleTurnGenerator(BaseGenerator):
     def __init__(self,
                  api_key: str,
                  model_name: str,
-                 max_tokens: int = 2048,
+                 max_tokens: int | None = None,
                  number_of_responses: int = 1,
                  retries: int = 5,
                  system_message: str | None = None,
